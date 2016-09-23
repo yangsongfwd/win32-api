@@ -553,6 +553,33 @@ typedef struct {
 } CALLPARAM;
 
 
+int UnicodeToUTF8(const void* wstr, char *buf, int size)
+{
+	// wide char to multi char
+	int iTextLen = WideCharToMultiByte(CP_UTF8,
+		0,
+		(LPCWCH)wstr,
+		-1,
+		NULL,
+		0,
+		NULL,
+		NULL);
+
+	if (buf == 0 && iTextLen + 1 > size)
+		return iTextLen + 1;
+
+	::WideCharToMultiByte(CP_UTF8,
+		0,
+		(LPCWCH)wstr,
+		-1,
+		buf,
+		size,
+		NULL,
+		NULL);
+
+	return iTextLen + 1;
+}
+
 DWORD CallbackFunction(CALLPARAM param, VALUE callback)
 {
   VALUE v_proto, v_return, v_proc, v_retval;
@@ -560,6 +587,8 @@ DWORD CallbackFunction(CALLPARAM param, VALUE callback)
   int i, argc;
   char *a_proto;
   char *a_return;
+  int size;
+  char* buf;
 
   if(callback && !NIL_P(callback)){
     v_proto = rb_iv_get(callback, "@prototype");
@@ -580,6 +609,17 @@ DWORD CallbackFunction(CALLPARAM param, VALUE callback)
         case 'P':
           if(param.params[i])
             argv[i] = rb_str_new2((char *)param.params[i]);
+          break;
+        case 'W':
+          if(param.params[i])
+          {
+              size = UnicodeToUTF8((char *)param.params[i], 0, 0);
+              size = malloc(size + 1);
+              UnicodeToUTF8((char *)param.params[i], buf, size+1);
+              argv[i] = rb_str_new2(buf);
+              free(buf);
+              buf=0;
+          }
           break;
         case 'I':
           argv[i] = INT2NUM(param.params[i]);
