@@ -568,7 +568,7 @@ int UnicodeToUTF8(const void* wstr, char *buf, int size)
 	if (buf == 0 && iTextLen + 1 > size)
 		return iTextLen + 1;
 
-	::WideCharToMultiByte(CP_UTF8,
+	WideCharToMultiByte(CP_UTF8,
 		0,
 		(LPCWCH)wstr,
 		-1,
