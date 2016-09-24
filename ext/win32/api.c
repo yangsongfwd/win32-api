@@ -184,7 +184,7 @@ static VALUE callback_init(int argc, VALUE* argv, VALUE self)
          case 'I': case 'L': case 'P': case 'V': case 'S': case 'W':
             break;
          default:
-            rb_raise(cAPIProtoError, "Illegal prototype '%c'",
+            rb_raise(cAPIProtoError, "Illegal prototype 1 '%c'",
                RSTRING_PTR(v_proto)[i]
             );
       }
@@ -377,7 +377,7 @@ static VALUE api_init(int argc, VALUE* argv, VALUE self)
             ptr->prototype[i] = _T_STRING;
             break;
          default:
-            rb_raise(cAPIProtoError, "Illegal prototype '%s'",
+            rb_raise(cAPIProtoError, "Illegal prototype 2 '%s'",
                StringValuePtr(RARRAY_PTR(v_proto)[i])
             );
       }
@@ -503,7 +503,7 @@ static VALUE func_init(int argc, VALUE* argv, VALUE self){
             ptr->prototype[i] = _T_STRING;
             break;
          default:
-            rb_raise(cAPIProtoError, "Illegal prototype '%s'",
+            rb_raise(cAPIProtoError, "Illegal prototype 3 '%s'",
                StringValuePtr(RARRAY_PTR(v_proto)[i])
             );
       }
@@ -625,7 +625,7 @@ DWORD CallbackFunction(CALLPARAM param, VALUE callback)
           argv[i] = INT2NUM(param.params[i]);
           break;
         default:
-          rb_raise(cAPIProtoError, "Illegal prototype '%c'", a_proto[i]);
+          rb_raise(cAPIProtoError, "Illegal prototype 4'%c'", a_proto[i]);
       }
     }
 
