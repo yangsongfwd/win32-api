@@ -181,7 +181,7 @@ static VALUE callback_init(int argc, VALUE* argv, VALUE self)
    /* Validate prototype characters */
    for(i = 0; i < RSTRING_LEN(v_proto); i++){
       switch(RSTRING_PTR(v_proto)[i]){
-         case 'I': case 'L': case 'P': case 'V': case 'S':
+         case 'I': case 'L': case 'P': case 'V': case 'S': case 'W':
             break;
          default:
             rb_raise(cAPIProtoError, "Illegal prototype '%c'",
