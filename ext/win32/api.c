@@ -607,9 +607,9 @@ DWORD CallbackFunction(CALLPARAM param, VALUE callback)
           argv[i] = SIZET2NUM(param.params[i]);
           break;
         case 'P':
-          if(param.params[i])
+/*          if(param.params[i])
             argv[i] = rb_str_new2((char *)param.params[i]);
-          break;
+          break;*/
         case 'W':
           if(param.params[i])
           {
